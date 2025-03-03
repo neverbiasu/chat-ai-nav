@@ -1,6 +1,3 @@
-我将优化提示词卡片组件文档的格式，主要包括统一标题层级、调整空白行、优化表格格式和列表缩进等方面。
-
-```markdown:/Users/nev4rb14su/Desktop/workspace/Chat-AI-Nav/docs/product/prompt-template-card.md
 # 提示词卡片组件产品设计文档
 
 ## 1. 功能模块描述
