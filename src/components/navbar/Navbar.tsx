@@ -5,15 +5,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
+import { ElementType } from 'react'
 
-// 导航项接口定义
-interface NavItem {
-  key: string
-  label: string
-  icon?: React.ReactNode
-  path: string
-  children?: NavItem[]
-}
+// 导入 NavItem 接口而不是重新定义
+import { NavItem } from './navConfig'
 
 // 导航栏组件接口定义
 interface NavbarProps {
@@ -31,9 +26,18 @@ const Navbar: React.FC<NavbarProps> = ({ navItems, className = '' }) => {
   const [activeKey, setActiveKey] = useState<string>('')
   const [isMobile, setIsMobile] = useState<boolean>(false)
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
+  // 添加客户端挂载状态
+  const [mounted, setMounted] = useState(false)
+
+  // 首先检查组件是否已在客户端挂载
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // 检测窗口尺寸变化，更新移动端状态
   useEffect(() => {
+    if (!mounted) return
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
     }
@@ -48,28 +52,28 @@ const Navbar: React.FC<NavbarProps> = ({ navItems, className = '' }) => {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [mounted]) // 依赖于挂载状态
 
   // 根据当前路径设置激活的导航项
   useEffect(() => {
-    if (pathname) {
-      const activeItem = navItems.find(
-        (item) => item.path === pathname || (item.children && item.children.some((child) => child.path === pathname))
-      )
-      if (activeItem) {
-        setActiveKey(activeItem.key)
-      }
-    }
-  }, [pathname, navItems])
+    if (!mounted || !pathname) return
 
-  // 切换主题
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
-  }
+    const activeItem =
+      navItems.find((item) => item.path === pathname) ||
+      navItems.find((item) => item.children?.some((child) => child.path === pathname))
+    if (activeItem) {
+      setActiveKey(activeItem.key)
+    }
+  }, [pathname, navItems, mounted])
 
   // 切换移动端菜单折叠状态
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed)
+  }
+
+  // 主题切换函数
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
   // 渲染导航项
@@ -84,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ navItems, className = '' }) => {
             if (isMobile) setIsCollapsed(true)
           }}
         >
-          {item.icon && <span className="mr-2 w-5 h-5">{item.icon}</span>}
+          {item.icon && <span className="mr-2 w-5 h-5">{React.createElement(item.icon)}</span>}
           <span>{item.label}</span>
         </Link>
 

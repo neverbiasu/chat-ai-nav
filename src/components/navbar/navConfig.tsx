@@ -1,32 +1,37 @@
 /**
  * 导航栏配置文件
- * 定义导航项结构和示例数据
+ * 定义导航项结构和导航数据
  */
 
-import { HomeIcon, RocketLaunchIcon, BookOpenIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
-import React from 'react'
+import { ElementType } from 'react'
+import {
+  HomeIcon,
+  MagnifyingGlassIcon,
+  BookmarkIcon,
+  QuestionMarkCircleIcon,
+  BookOpenIcon,
+  Cog6ToothIcon
+} from '@heroicons/react/24/outline'
 
-// 导航项接口定义
 export interface NavItem {
   key: string
   label: string
-  icon?: React.ElementType // 修改为 ElementType，更准确地表示 Heroicons 组件类型
+  icon?: ElementType
   path: string
   children?: NavItem[]
 }
 
-// 示例导航配置
 const navConfig: NavItem[] = [
   {
     key: 'home',
     label: '首页',
-    icon: HomeIcon, // 直接使用组件类型，不需要类型转换
+    icon: HomeIcon,
     path: '/'
   },
   {
     key: 'discover',
     label: '发现',
-    icon: RocketLaunchIcon,
+    icon: MagnifyingGlassIcon,
     path: '/discover',
     children: [
       {
@@ -42,10 +47,22 @@ const navConfig: NavItem[] = [
     ]
   },
   {
+    key: 'favorites',
+    label: '收藏',
+    icon: BookmarkIcon,
+    path: '/favorites'
+  },
+  {
     key: 'prompt',
     label: '提示词工坊',
     icon: BookOpenIcon,
     path: '/prompt'
+  },
+  {
+    key: 'about',
+    label: '关于',
+    icon: QuestionMarkCircleIcon,
+    path: '/about'
   },
   {
     key: 'settings',
