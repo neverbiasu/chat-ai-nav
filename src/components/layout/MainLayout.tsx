@@ -26,10 +26,10 @@ interface MainLayoutProps {
  */
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-200">
       <Navbar navItems={navConfig} />
       <main className="flex-1">{children}</main>
-      <footer className="bg-white dark:bg-gray-900 py-6 border-t border-gray-200 dark:border-gray-800">
+      <footer className="bg-white dark:bg-gray-800 py-6 border-t border-gray-200 dark:border-gray-700">
         <div className="max-w-[1200px] mx-auto px-4 text-center text-gray-500 dark:text-gray-400">
           <p>© {new Date().getFullYear()} ChatAI导航 - 发现最佳AI工具和资源</p>
         </div>
