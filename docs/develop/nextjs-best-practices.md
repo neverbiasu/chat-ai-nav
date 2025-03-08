@@ -1,198 +1,293 @@
-# Next.js 最佳实践
+# Next.js 最佳实践指南
 
-## 避免水合错误 (Hydration Errors)
+## 目录
 
-水合错误是当服务端渲染 (SSR) 的内容与客户端渲染的内容不匹配时发生的。这通常发生在以下情况：
+- [水合错误的解决方案](#水合错误的解决方案)
+- [数据获取策略](#数据获取策略)
+- [性能优化技巧](#性能优化技巧)
+- [路由与导航](#路由与导航)
+- [常见问题排查](#常见问题排查)
 
-1. 代码访问了仅客户端可用的 API（如 `window`、`document`、`localStorage` 等）
-2. 组件根据客户端特定信息（如屏幕尺寸、主题设置等）渲染不同的内容
-3. 使用了依赖于客户端状态的第三方库
+## 水合错误的解决方案
 
-### 解决方案
+> 💡 **什么是水合错误？** 当服务端渲染的HTML与客户端JavaScript生成的内容不一致时，React就会报"Hydration"错误。
 
-#### 1. 使用挂载检查模式
+### 主要解决方法
 
-```tsx
-function ClientSideComponent() {
+#### 1. 使用挂载检查
+
+这是最常用的解决方案，适用于大多数场景：
+
+```jsx
+function MyComponent() {
+  // 1. 添加挂载状态
   const [mounted, setMounted] = useState(false);
   
+  // 2. 组件挂载后更新状态
   useEffect(() => {
     setMounted(true);
   }, []);
   
+  // 3. 未挂载时显示占位内容
   if (!mounted) {
-    return <Fallback />; // 显示占位符或骨架屏
+    return <LoadingSkeleton />;  // 返回一个加载骨架屏
   }
   
-  // 正常渲染，可以安全访问客户端 API
-  return <ActualComponent />;
-}
-```
-
-#### 2. 条件渲染检查
-
-```tsx
-{typeof window !== 'undefined' && <ClientFeatureComponent />}
-```
-
-#### 3. 动态导入
-
-使用 Next.js 的 `dynamic` 导入，并禁用 SSR：
-
-```tsx
-import dynamic from 'next/dynamic';
-
-const ClientComponent = dynamic(() => import('../components/ClientComponent'), {
-  ssr: false
-});
-```
-
-#### 4. 使用 suppressHydrationWarning
-
-对于无法避免差异的元素（如显示当前时间的组件），可以使用 `suppressHydrationWarning`：
-
-```tsx
-<div suppressHydrationWarning>
-  当前时间: {new Date().toLocaleTimeString()}
-</div>
-```
-
-**注意**：这只会抑制警告，而不会解决实际差异问题。仅应在极少数情况下使用。
-
-## 数据获取最佳实践
-
-### 使用服务器组件
-
-Next.js App Router 允许默认使用 React 服务器组件，它们只在服务器上运行：
-
-```tsx
-// app/page.tsx (服务器组件)
-async function getData() {
-  const res = await fetch('https://api.example.com/data');
-  return res.json();
-}
-
-export default async function Page() {
-  const data = await getData();
-  return <main>{/* 使用数据渲染 */}</main>;
-}
-```
-
-### 客户端数据获取
-
-对于需要在客户端获取数据的情况，使用 React 的 `useEffect` 或 SWR/React Query 等库：
-
-```tsx
-'use client'
-
-import { useState, useEffect } from 'react';
-import useSWR from 'swr';
-
-export default function ClientComponent() {
-  const { data, error, isLoading } = useSWR('/api/data', fetcher);
-  
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading data</div>;
-  
-  return <div>{/* 渲染数据 */}</div>;
-}
-```
-
-## 构建高性能页面
-
-### 图片优化
-
-使用 Next.js 的 Image 组件来自动优化图像：
-
-```tsx
-import Image from 'next/image';
-
-<Image
-  src="/images/profile.jpg"
-  width={300}
-  height={300}
-  alt="Profile"
-  priority={isImportant}
-  loading="lazy"
-/>
-```
-
-### 字体优化
-
-使用 Next.js 的内置字体优化：
-
-```tsx
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
-
-export default function Layout({ children }) {
-  return <div className={inter.className}>{children}</div>;
-}
-```
-
-## 错误处理与边界
-
-在 App Router 中创建错误边界：
-
-```tsx
-// app/posts/[id]/error.tsx
-'use client'
-
-import { useEffect } from 'react';
-
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string }
-  reset: () => void
-}) {
-  useEffect(() => {
-    // 可以记录错误到错误报告服务
-    console.error(error);
-  }, [error]);
-
+  // 4. 挂载后正常渲染
   return (
     <div>
-      <h2>出现了错误！</h2>
-      <button onClick={() => reset()}>
-        尝试重新加载
-      </button>
+      当前时间: {new Date().toLocaleTimeString()}
+      窗口宽度: {window.innerWidth}px
     </div>
   );
 }
 ```
 
-## 路由与导航
+#### 2. 动态导入组件
 
-### 使用 Link 组件进行客户端导航
+适用于整个组件依赖客户端功能时：
 
-```tsx
-import Link from 'next/link';
+```jsx
+import dynamic from 'next/dynamic';
 
-<Link href="/about" prefetch={false}>
-  关于我们
-</Link>
-```
+// 禁用组件的服务端渲染
+const ClientOnlyComponent = dynamic(
+  () => import('../components/ClientComponent'),
+  { ssr: false } // 👈 关键设置
+);
 
-### 编程式导航
-
-```tsx
-'use client'
-
-import { useRouter } from 'next/navigation';
-
-export default function NavigateButton() {
-  const router = useRouter();
-  
+export default function Page() {
   return (
-    <button onClick={() => router.push('/dashboard')}>
-      前往仪表盘
-    </button>
+    <div>
+      <h1>这部分在服务器渲染</h1>
+      <ClientOnlyComponent />
+    </div>
   );
 }
 ```
 
-### 动态路由分段
+#### 3. 安全访问客户端API
 
+```jsx
+// ✅ 正确: 总是检查window是否存在
+const isBrowser = typeof window !== 'undefined';
+const width = isBrowser ? window.innerWidth : undefined;
+
+// ❌ 错误: 直接访问可能导致服务端错误
+const width = window.innerWidth; 
+```
+
+## 数据获取策略
+
+### 服务器组件获取数据
+
+```jsx
+// app/products/page.jsx - 服务器组件
+export default async function ProductsPage() {
+  // 直接使用async/await，不需要useState或useEffect
+  const products = await fetch('https://api.example.com/products')
+    .then(res => res.json());
+  
+  return (
+    <div>
+      <h1>产品列表</h1>
+      <ul>
+        {products.map(product => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+### 客户端组件获取数据
+
+```jsx
+'use client'
+
+import { useState, useEffect } from 'react';
+
+export default function ClientFetch() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/data');
+        const json = await res.json();
+        setData(json);
+      } catch (err) {
+        console.error('加载失败', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, []);
+  
+  if (loading) return <div>加载中...</div>;
+  
+  return <div>{/* 渲染数据 */}</div>;
+}
+```
+
+### 推荐的数据获取库
+
+- **SWR**: 轻量级，适合小型项目
+- **React Query**: 功能丰富，适合复杂项目
+- **RTK Query**: 适合已使用Redux的项目
+
+## 性能优化技巧
+
+### 图片优化
+
+使用Next.js内置的Image组件可以自动优化图片：
+
+```jsx
+import Image from 'next/image';
+
+// 自动优化图片尺寸和格式
+<Image 
+  src="/large-image.jpg" 
+  alt="优化后的图片"
+  width={800} 
+  height={600}
+  loading="lazy" // 延迟加载非首屏图片
+/>
+```
+
+### 路由预加载
+
+默认情况下，Next.js会自动预加载视口内的`<Link>`组件。你可以根据需要调整这一行为：
+
+```jsx
+// 禁用特定链接的预加载
+<Link href="/heavy-page" prefetch={false}>
+  大型页面
+</Link>
+```
+
+### 代码分割最佳实践
+
+- 使用动态导入拆分大型组件
+- 懒加载首屏外的复杂组件
+- 根据路由或用户交互拆分代码包
+
+## 路由与导航
+
+### 基本路由导航
+
+```jsx
+import Link from 'next/link';
+
+// 基本导航
+<Link href="/about">关于我们</Link>
+
+// 带查询参数
+<Link href="/search?q=nextjs">搜索 Next.js</Link>
+
+// 动态路由
+<Link href={`/blog/${postId}`}>阅读文章</Link>
+```
+
+### 编程式导航
+
+```jsx
+'use client'
+
+import { useRouter } from 'next/navigation';
+
+export default function NavigationButtons() {
+  const router = useRouter();
+  
+  return (
+    <div>
+      <button onClick={() => router.push('/dashboard')}>
+        前往仪表盘
+      </button>
+      <button onClick={() => router.back()}>
+        返回上一页
+      </button>
+      <button onClick={() => router.refresh()}>
+        刷新当前页面
+      </button>
+    </div>
+  )
+}
+```
+
+## 常见问题排查
+
+### 问题1: 页面闪烁（特别是暗模式切换时）
+
+**原因**: 在页面加载时，主题状态可能会从默认值变为用户保存的偏好设置。
+
+**解决方案**:
+
+```jsx
+function ThemeProvider({ children }) {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => setMounted(true), []);
+  
+  // 在挂载前隐藏内容，避免闪烁
+  if (!mounted) {
+    return <div style={{ visibility: 'hidden' }}>{children}</div>;
+  }
+  
+  return <div className="theme-ready">{children}</div>;
+}
+```
+
+### 问题2: `localStorage is not defined` 错误
+
+**原因**: 服务器上不存在localStorage对象。
+
+**解决方案**: 添加客户端检查
+
+```jsx
+const savedItems = typeof window !== 'undefined' 
+  ? localStorage.getItem('items') 
+  : null;
+```
+
+### 问题3: 首次加载后组件样式或内容突变
+
+**原因**: 服务器渲染的内容与客户端JavaScript计算的不一致。
+
+**解决方案**: 确保首次渲染的状态与服务端一致，然后在useEffect中更新
+
+```jsx
+// 不在初始状态中使用客户端API
+const [width, setWidth] = useState(0); // 初始值与SSR一致
+
+useEffect(() => {
+  // 客户端挂载后再更新状态
+  setWidth(window.innerWidth);
+  
+  const handleResize = () => setWidth(window.innerWidth);
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+```
+
+## 调试技巧
+
+- 使用 React 开发者工具检查组件渲染
+- 启用严格模式发现潜在问题：
+
+```jsx
+// next.config.js
+module.exports = {
+  reactStrictMode: true,
+}
+```
+
+- 使用 Chrome DevTools 的 "Rendering" 标签页启用 "Paint flashing" 检测不必要的重绘
+
+---
+
+需要更多 Next.js 技术支持？请访问[官方文档](https://nextjs.org/docs)或在团队 Slack 频道提问。
