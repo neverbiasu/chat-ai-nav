@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
@@ -120,8 +121,9 @@ const Navbar: React.FC<NavbarProps> = ({ navItems, className = '' }) => {
         <div className="flex justify-between items-center h-16">
           {/* Logo区域 */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
-              ChatAI导航
+            <Link href="/" className="flex items-center">
+              <Image src="/images/logo.png" alt="ChatAI导航" width={48} height={48} className="mr-2" />
+              <span className="text-xl font-bold text-gray-900 dark:text-white">ChatAI导航</span>
             </Link>
           </div>
 
