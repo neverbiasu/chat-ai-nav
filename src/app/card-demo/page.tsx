@@ -2,12 +2,17 @@
 
 import React, { useState, useEffect } from 'react'
 import ChatAICard from '@/components/chat-ai-card/ChatAICard'
+import ChatAIDetail from '@/components/chat-ai-detail/ChatAIDetail'
 import { mockAiTools, AiTool } from '@/data/mockAiTools'
+import { getMockAiToolDetail, AiToolDetail } from '@/data/mockAiToolsDetail'
 
 const CardDemo = () => {
   const [variant, setVariant] = useState<'standard' | 'simple' | 'detailed'>('standard')
   const [tools, setTools] = useState<AiTool[]>([])
   const [mounted, setMounted] = useState(false)
+  const [selectedToolId, setSelectedToolId] = useState<string | null>(null)
+  const [detailVisible, setDetailVisible] = useState(false)
+  const [selectedToolDetail, setSelectedToolDetail] = useState<AiToolDetail | null>(null)
 
   useEffect(() => {
     setMounted(true)
@@ -35,6 +40,31 @@ const CardDemo = () => {
 
   const handleFavoriteToggle = (id: string, isFavorite: boolean) => {
     setTools((prev) => prev.map((tool) => (tool.id === id ? { ...tool, isFavorite } : tool)))
+
+    // 如果详情弹窗当前打开并且是同一个工具，则同步收藏状态
+    if (selectedToolDetail && selectedToolDetail.id === id) {
+      setSelectedToolDetail((prev) => (prev ? { ...prev, isFavorite } : null))
+    }
+  }
+
+  const handleCardClick = (id: string) => {
+    // 确保详情数据可以正确获取
+    try {
+      const toolDetail = getMockAiToolDetail(id)
+      if (toolDetail) {
+        setSelectedToolDetail(toolDetail)
+        setSelectedToolId(id)
+        setDetailVisible(true)
+      } else {
+        console.error(`找不到ID为 ${id} 的工具详情数据`)
+      }
+    } catch (error) {
+      console.error('获取工具详情时发生错误:', error)
+    }
+  }
+
+  const handleCloseDetail = () => {
+    setDetailVisible(false)
   }
 
   // 如果尚未挂载，显示加载状态
@@ -105,7 +135,13 @@ const CardDemo = () => {
         <h2 className="text-2xl font-semibold mb-6">卡片展示</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {tools.map((tool) => (
-            <ChatAICard key={tool.id} {...tool} variant={variant} onFavoriteToggle={handleFavoriteToggle} />
+            <ChatAICard
+              key={tool.id}
+              {...tool}
+              variant={variant}
+              onFavoriteToggle={handleFavoriteToggle}
+              onClick={() => handleCardClick(tool.id)}
+            />
           ))}
         </div>
       </section>
@@ -120,11 +156,21 @@ const CardDemo = () => {
       <section className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <h2 className="text-xl font-semibold mb-4">交互说明</h2>
         <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-300">
-          <li>点击卡片：显示AI工具详情（控制台输出）</li>
+          <li>点击卡片：打开详情弹窗，显示完整信息</li>
           <li>点击心形图标：添加/移除收藏（状态保存在本地存储）</li>
           <li>点击访问按钮：跳转到AI工具官网</li>
         </ul>
       </section>
+
+      {/* 详情弹窗 */}
+      {selectedToolDetail && (
+        <ChatAIDetail
+          isOpen={detailVisible}
+          onClose={handleCloseDetail}
+          {...selectedToolDetail}
+          onFavoriteToggle={handleFavoriteToggle}
+        />
+      )}
     </div>
   )
 }
