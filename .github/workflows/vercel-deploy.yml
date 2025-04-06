@@ -31,12 +31,16 @@ jobs:
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy to Vercel
-        run: |
-          if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
-            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
-          else
-            vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
-          fi
+        if: github.event_name == 'push'
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy to Preview
+        if: github.event_name == 'pull_request'
+        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
