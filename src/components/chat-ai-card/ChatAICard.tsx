@@ -14,6 +14,7 @@ export interface ChatAICardProps {
   isFavorite?: boolean
   variant?: 'standard' | 'simple' | 'detailed'
   onFavoriteToggle?: (id: string, isFavorite: boolean) => void
+  onClick?: () => void // 新增点击事件处理属性
 }
 
 const ChatAICard: React.FC<ChatAICardProps> = ({
@@ -27,7 +28,8 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
   hotness,
   isFavorite: initialFavorite = false,
   variant = 'standard',
-  onFavoriteToggle
+  onFavoriteToggle,
+  onClick
 }) => {
   const [isFavorite, setIsFavorite] = useState(initialFavorite)
   const [imageError, setImageError] = useState(false)
@@ -47,6 +49,11 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
       }
     }
   }, [id])
+
+  // 更新收藏状态
+  useEffect(() => {
+    setIsFavorite(initialFavorite)
+  }, [initialFavorite])
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -74,8 +81,9 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
   }
 
   const handleCardClick = () => {
-    // 这里可以实现详情弹窗逻辑
-    console.log(`Showing details for ${name}`)
+    if (onClick) {
+      onClick()
+    }
   }
 
   const handleImageError = () => {
