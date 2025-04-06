@@ -12,3 +12,6 @@ server/dist
 public/dist
 .turbo
 test-results
+
+# Vercel
+.vercel
