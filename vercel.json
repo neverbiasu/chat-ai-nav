@@ -1,9 +1,18 @@
 {
   "version": 2,
-  "public": false,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
   "github": {
     "enabled": false
-  },
-  "builds": [{ "src": ".next", "use": "@vercel/static" }],
-  "rewrites": [{ "source": "/(.*)", "destination": "/$1" }]
+  }
 }
