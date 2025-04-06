@@ -34,6 +34,5 @@ jobs:
           working-directory: ./
           alias-domains: |
             chat-ai-nav.vercel.app
-            {{BRANCH}}.chat-ai-nav.vercel.app
-            pr-{{PR_NUMBER}}.chat-ai-nav.vercel.app
+          production-deploy: ${{ github.event_name != 'pull_request' }}
           github-comment: true
