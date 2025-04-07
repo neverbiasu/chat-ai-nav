@@ -1,0 +1,282 @@
+[
+  {
+    "id": "chatgpt",
+    "name": "ChatGPT",
+    "logo_path": "https://logos-world.net/wp-content/uploads/2023/02/ChatGPT-Logo-500x281.png",
+    "desc": "OpenAI开发的大型语言模型，支持自然对话和内容创作",
+    "tags": ["对话", "写作", "翻译"],
+    "ai_url": "https://chat.openai.com",
+    "company": {
+      "name": "OpenAI",
+      "website": "https://openai.com"
+    },
+    "hotness": 98,
+    "details": {
+      "full_description": "ChatGPT是由OpenAI开发的一款高级语言模型，能够理解并生成类似人类的文本。它可以用于撰写内容、回答问题、创建创意作品、编写代码等多种任务。ChatGPT基于GPT系列架构，通过大量的互联网文本训练而成。",
+      "features": [
+        "自然语言对话",
+        "内容创作",
+        "代码辅助",
+        "问题解答",
+        "多语言支持"
+      ],
+      "screenshots": [
+        {
+          "url": "/images/chatgpt-screenshot1.png",
+          "caption": "ChatGPT 对话界面"
+        },
+        {
+          "url": "/images/chatgpt-screenshot2.png",
+          "caption": "ChatGPT 创作示例"
+        }
+      ],
+      "pricing": {
+        "free_tier": true,
+        "has_trial": false,
+        "starting_price": "$20/月"
+      },
+      "rating": {
+        "score": 4.7,
+        "count": 12500
+      },
+      "alternatives": [
+        { "id": "claude", "name": "Claude", "similarity": 0.9 },
+        { "id": "gemini", "name": "Gemini", "similarity": 0.85 },
+        { "id": "copilot", "name": "GitHub Copilot", "similarity": 0.7 }
+      ]
+    }
+  },
+  {
+    "id": "claude",
+    "name": "Claude",
+    "logo_path": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d6/79/ad/d679ad63-4f76-ef0f-62c4-ff39e9f04b25/AppIcon-0-0-1x_U007epad-0-1-85-220.png/246x0w.webp",
+    "desc": "Anthropic开发的AI助手，专注于有用、无害和诚实的回答",
+    "tags": ["对话", "研究", "助手"],
+    "ai_url": "https://claude.ai",
+    "company": {
+      "name": "Anthropic",
+      "website": "https://anthropic.com"
+    },
+    "hotness": 92,
+    "details": {
+      "full_description": "Claude是由Anthropic开发的AI助手，专注于有帮助、真实和无害的回应。它可以处理广泛的任务，包括写作、编码、对话和创意合作。Claude的目标是生成安全、有益的内容，避免有害或不适当的回应。",
+      "features": [
+        "安全对话设计",
+        "长上下文理解",
+        "内容摘要",
+        "文档分析",
+        "创意写作"
+      ],
+      "screenshots": [
+        {
+          "url": "/images/claude-screenshot1.png",
+          "caption": "Claude 对话界面"
+        },
+        {
+          "url": "/images/claude-screenshot2.png",
+          "caption": "Claude 文档分析"
+        }
+      ],
+      "pricing": {
+        "free_tier": true,
+        "has_trial": true,
+        "starting_price": "$20/月"
+      },
+      "rating": {
+        "score": 4.5,
+        "count": 8300
+      },
+      "alternatives": [
+        { "id": "chatgpt", "name": "ChatGPT", "similarity": 0.9 },
+        { "id": "gemini", "name": "Gemini", "similarity": 0.8 },
+        { "id": "copilot", "name": "GitHub Copilot", "similarity": 0.6 }
+      ]
+    }
+  },
+  {
+    "id": "copilot",
+    "name": "GitHub Copilot",
+    "logo_path": "https://github.blog/wp-content/uploads/2022/05/Copilot_Blog_Icon-1.svg",
+    "desc": "AI驱动的代码辅助工具，帮助开发者更快地编写代码",
+    "tags": ["编程", "代码", "开发"],
+    "ai_url": "https://github.com/features/copilot",
+    "company": {
+      "name": "GitHub (Microsoft)",
+      "website": "https://github.com/features/copilot"
+    },
+    "hotness": 90,
+    "details": {
+      "full_description": "GitHub Copilot是一款由GitHub和OpenAI开发的AI编程助手，基于OpenAI的Codex模型。它可以在多种代码编辑器中使用，分析上下文并实时生成代码建议，帮助开发者加速编程过程。",
+      "features": [
+        "代码自动补全",
+        "多语言支持",
+        "注释转代码",
+        "测试生成",
+        "IDE集成"
+      ],
+      "screenshots": [
+        {
+          "url": "/images/copilot-screenshot1.png",
+          "caption": "Copilot 代码建议"
+        },
+        {
+          "url": "/images/copilot-screenshot2.png",
+          "caption": "Copilot IDE集成"
+        }
+      ],
+      "pricing": {
+        "free_tier": false,
+        "has_trial": true,
+        "starting_price": "$10/月"
+      },
+      "rating": {
+        "score": 4.8,
+        "count": 9200
+      },
+      "alternatives": [
+        { "id": "chatgpt", "name": "ChatGPT", "similarity": 0.7 },
+        { "id": "claude", "name": "Claude", "similarity": 0.6 },
+        { "id": "codewhisperer", "name": "CodeWhisperer", "similarity": 0.9 }
+      ]
+    }
+  },
+  {
+    "id": "jasper",
+    "name": "Jasper",
+    "logo_path": "https://cdn.prod.website-files.com/60e5f2de011b86acebc30db7/665dd9c1792c38c09c7d74ec_Jasper%20Logo%20Lockup%20-%20Dark%20Khaki.svg",
+    "desc": "AI文案写作助手，帮助营销人员创建高质量内容",
+    "tags": ["营销", "写作", "内容"],
+    "ai_url": "https://www.jasper.ai",
+    "company": {
+      "name": "Jasper AI",
+      "website": "https://www.jasper.ai",
+      "founded": "2020"
+    },
+    "hotness": 85,
+    "details": {
+      "full_description": "Jasper是一款面向营销人员和内容创作者的AI助手，可以帮助用户快速生成高质量、原创的营销内容。它理解多种营销格式，能够根据简短提示生成完整的博客文章、社交媒体帖子和广告文案。",
+      "features": [
+        "AI写作辅助",
+        "多种内容模板",
+        "团队协作",
+        "SEO优化",
+        "品牌声音定制"
+      ],
+      "screenshots": [
+        {
+          "url": "/images/jasper-screenshot1.png",
+          "caption": "Jasper 内容编辑器"
+        },
+        { "url": "/images/jasper-screenshot2.png", "caption": "Jasper 模板库" }
+      ],
+      "pricing": {
+        "free_tier": false,
+        "has_trial": true,
+        "starting_price": "$49/月"
+      },
+      "rating": {
+        "score": 4.4,
+        "count": 5200
+      },
+      "alternatives": [
+        { "id": "copy-ai", "name": "Copy.ai", "similarity": 0.9 },
+        { "id": "writesonic", "name": "Writesonic", "similarity": 0.85 },
+        { "id": "chatgpt", "name": "ChatGPT", "similarity": 0.7 }
+      ]
+    }
+  },
+  {
+    "id": "gemini",
+    "name": "Gemini",
+    "logo_path": "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg",
+    "desc": "Google最新多模态AI模型，支持文本、图像、视频理解",
+    "tags": ["多模态", "搜索", "分析"],
+    "ai_url": "https://gemini.google.com",
+    "company": {
+      "name": "Google",
+      "website": "https://google.com"
+    },
+    "hotness": 94,
+    "details": {
+      "full_description": "Gemini (原Bard)是谷歌开发的一款对话式人工智能服务，能够生成文本、翻译语言、编写不同类型的创意内容，并回答您的问题。它由谷歌的大语言模型支持，可以访问和处理来自网络的信息。",
+      "features": [
+        "谷歌搜索集成",
+        "实时信息获取",
+        "图像理解",
+        "创意生成",
+        "多语言翻译"
+      ],
+      "screenshots": [
+        {
+          "url": "/images/gemini-screenshot1.png",
+          "caption": "Gemini 对话界面"
+        },
+        {
+          "url": "/images/gemini-screenshot2.png",
+          "caption": "Gemini 图像理解"
+        }
+      ],
+      "pricing": {
+        "free_tier": true,
+        "has_trial": false,
+        "starting_price": "$10/月"
+      },
+      "rating": {
+        "score": 4.2,
+        "count": 6700
+      },
+      "alternatives": [
+        { "id": "chatgpt", "name": "ChatGPT", "similarity": 0.9 },
+        { "id": "claude", "name": "Claude", "similarity": 0.8 },
+        { "id": "copilot", "name": "GitHub Copilot", "similarity": 0.5 }
+      ]
+    }
+  },
+  {
+    "id": "perplexity",
+    "name": "Perplexity",
+    "logo_path": "https://framerusercontent.com/images/rT6Gy5rUran71JjQcj4Y5ThtEg.png",
+    "desc": "AI驱动的搜索引擎，提供有来源的回答和实时信息",
+    "tags": ["搜索", "研究", "信息"],
+    "ai_url": "https://www.perplexity.ai",
+    "company": {
+      "name": "Perplexity AI",
+      "website": "https://www.perplexity.ai"
+    },
+    "hotness": 87,
+    "details": {
+      "full_description": "Perplexity是一个AI驱动的搜索引擎，提供有来源依据的答案和实时信息。与传统搜索引擎不同，它直接回答用户问题并提供信息来源，而不仅仅是列出相关网页链接。适合进行研究和获取最新信息。",
+      "features": [
+        "AI驱动搜索",
+        "有来源的回答",
+        "实时信息",
+        "学术研究支持",
+        "对话式交互"
+      ],
+      "screenshots": [
+        {
+          "url": "/images/perplexity-screenshot1.png",
+          "caption": "Perplexity 搜索界面"
+        },
+        {
+          "url": "/images/perplexity-screenshot2.png",
+          "caption": "Perplexity 引用来源"
+        }
+      ],
+      "pricing": {
+        "free_tier": true,
+        "has_trial": false,
+        "starting_price": "$20/月"
+      },
+      "rating": {
+        "score": 4.3,
+        "count": 3800
+      },
+      "alternatives": [
+        { "id": "youchat", "name": "YouChat", "similarity": 0.9 },
+        { "id": "kagi", "name": "Kagi", "similarity": 0.8 },
+        { "id": "bing", "name": "Bing AI", "similarity": 0.7 }
+      ]
+    }
+  }
+]
