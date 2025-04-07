@@ -1,29 +1,29 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { HeartIcon, HeartFilledIcon } from "@/components/chat-ai-card/Icons";
-import { StarIcon } from "@/components/chat-ai-detail/Icons";
-import { ChatAIModelDetail } from "@/data/mockChatAIModelDetails";
+import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import { HeartIcon, HeartFilledIcon } from '@/components/chat-ai-card/Icons'
+import { StarIcon } from '@/components/chat-ai-detail/Icons'
+import { ChatAIModelDetail } from '@/data/mockChatAIModelDetails'
 
 // 使用新的数据模型接口
 export interface ChatAIDetailProps extends Partial<ChatAIModelDetail> {
-  isOpen: boolean;
-  onClose: () => void;
-  onFavoriteToggle?: (id: string, isFavorite: boolean) => void;
+  isOpen: boolean
+  onClose: () => void
+  onFavoriteToggle?: (id: string, isFavorite: boolean) => void
 }
 
 const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
   isOpen,
   onClose,
-  id = "",
-  name = "",
-  logo_path = "",
-  desc = "",
-  full_description = "",
+  id = '',
+  name = '',
+  logo_path = '',
+  desc = '',
+  full_description = '',
   tags = [],
-  ai_url = "", // 使用新的ai_url字段
+  ai_url = '', // 使用新的ai_url字段
   company,
   features = [],
   screenshots = [],
@@ -31,67 +31,62 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
   rating,
   isFavorite: initialFavorite = false,
   onFavoriteToggle,
-  alternatives = [],
+  alternatives = []
 }) => {
-  const [isFavorite, setIsFavorite] = useState(initialFavorite);
-  const [imageError, setImageError] = useState(false);
-  const [activeTab, setActiveTab] = useState<
-    "overview" | "features" | "pricing"
-  >("overview");
-  const [mounted, setMounted] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(initialFavorite)
+  const [imageError, setImageError] = useState(false)
+  const [activeTab, setActiveTab] = useState<'overview' | 'features' | 'pricing'>('overview')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true);
-    setIsFavorite(initialFavorite);
+    setMounted(true)
+    setIsFavorite(initialFavorite)
 
     // 当模态框打开时禁用背景滚动
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden'
     }
 
     // 组件卸载时恢复背景滚动
     return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen, initialFavorite]);
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpen, initialFavorite])
 
   const handleImageError = () => {
-    setImageError(true);
-  };
+    setImageError(true)
+  }
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState);
+    e.stopPropagation()
+    const newFavoriteState = !isFavorite
+    setIsFavorite(newFavoriteState)
 
     if (onFavoriteToggle) {
-      onFavoriteToggle(id, newFavoriteState);
+      onFavoriteToggle(id, newFavoriteState)
     }
 
     // 保存收藏状态到本地存储
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       try {
-        const favorites = JSON.parse(localStorage.getItem("favorites") || "{}");
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '{}')
         if (newFavoriteState) {
-          favorites[id] = true;
+          favorites[id] = true
         } else {
-          delete favorites[id];
+          delete favorites[id]
         }
-        localStorage.setItem("favorites", JSON.stringify(favorites));
+        localStorage.setItem('favorites', JSON.stringify(favorites))
       } catch (error) {
-        console.error("Failed to update favorites in localStorage", error);
+        console.error('Failed to update favorites in localStorage', error)
       }
     }
-  };
+  }
 
-  if (!isOpen || !mounted) return null;
+  if (!isOpen || !mounted) return null
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
-        onClick={onClose}
-      ></div>
+      <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onClick={onClose}></div>
 
       <div className="relative min-h-screen flex items-center justify-center p-4">
         <div
@@ -118,9 +113,7 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
                 )}
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {name}
-                </h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{name}</h2>
                 {company && (
                   <a
                     href={company.website}
@@ -137,11 +130,9 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
               <button
                 onClick={handleFavoriteClick}
                 className="p-2 rounded-md text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 focus:outline-none"
-                aria-label={isFavorite ? "取消收藏" : "收藏"}
+                aria-label={isFavorite ? '取消收藏' : '收藏'}
               >
-                <span className="w-6 h-6 block">
-                  {isFavorite ? <HeartFilledIcon /> : <HeartIcon />}
-                </span>
+                <span className="w-6 h-6 block">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
               </button>
               <button
                 onClick={onClose}
@@ -157,31 +148,31 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
           <div className="border-b dark:border-gray-700">
             <nav className="flex px-6">
               <button
-                onClick={() => setActiveTab("overview")}
+                onClick={() => setActiveTab('overview')}
                 className={`py-3 px-4 text-sm font-medium ${
-                  activeTab === "overview"
-                    ? "border-b-2 border-blue-500 text-blue-500"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                  activeTab === 'overview'
+                    ? 'border-b-2 border-blue-500 text-blue-500'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                 }`}
               >
                 概述
               </button>
               <button
-                onClick={() => setActiveTab("features")}
+                onClick={() => setActiveTab('features')}
                 className={`py-3 px-4 text-sm font-medium ${
-                  activeTab === "features"
-                    ? "border-b-2 border-blue-500 text-blue-500"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                  activeTab === 'features'
+                    ? 'border-b-2 border-blue-500 text-blue-500'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                 }`}
               >
                 功能特性
               </button>
               <button
-                onClick={() => setActiveTab("pricing")}
+                onClick={() => setActiveTab('pricing')}
                 className={`py-3 px-4 text-sm font-medium ${
-                  activeTab === "pricing"
-                    ? "border-b-2 border-blue-500 text-blue-500"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                  activeTab === 'pricing'
+                    ? 'border-b-2 border-blue-500 text-blue-500'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                 }`}
               >
                 价格计划
@@ -191,13 +182,11 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
 
           {/* 内容区域 */}
           <div className="p-6">
-            {activeTab === "overview" && (
+            {activeTab === 'overview' && (
               <div>
                 <div className="flex items-center mb-6">
                   <div className="flex-1">
-                    <p className="text-gray-700 dark:text-gray-300 mb-4">
-                      {full_description || desc}
-                    </p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">{full_description || desc}</p>
                     <div className="flex flex-wrap gap-2 mb-4">
                       {tags.map((tag) => (
                         <span
@@ -212,33 +201,25 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
 
                   {rating && (
                     <div className="ml-4 text-center">
-                      <div className="text-3xl font-bold text-gray-900 dark:text-white">
-                        {rating.score.toFixed(1)}
-                      </div>
+                      <div className="text-3xl font-bold text-gray-900 dark:text-white">{rating.score.toFixed(1)}</div>
                       <div className="flex items-center justify-center mb-1">
                         {[...Array(5)].map((_, i) => (
                           <StarIcon
                             key={i}
                             className={`h-4 w-4 ${
-                              i < Math.round(rating.score)
-                                ? "text-yellow-400"
-                                : "text-gray-300 dark:text-gray-600"
+                              i < Math.round(rating.score) ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'
                             }`}
                           />
                         ))}
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        {rating.count} 评价
-                      </div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">{rating.count} 评价</div>
                     </div>
                   )}
                 </div>
 
                 {screenshots && screenshots.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
-                      截图
-                    </h3>
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">截图</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {screenshots.map((screenshot, index) => (
                         <div
@@ -256,16 +237,14 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
 
                 {alternatives && alternatives.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
-                      相似工具
-                    </h3>
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">相似工具</h3>
                     <div className="flex flex-wrap gap-2">
                       {alternatives.map((alt) => (
                         <span
-                          key={typeof alt === "string" ? alt : alt.id}
+                          key={typeof alt === 'string' ? alt : alt.id}
                           className="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-full"
                         >
-                          {typeof alt === "string" ? alt : alt.name}
+                          {typeof alt === 'string' ? alt : alt.name}
                         </span>
                       ))}
                     </div>
@@ -274,11 +253,9 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
               </div>
             )}
 
-            {activeTab === "features" && (
+            {activeTab === 'features' && (
               <div>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                  主要功能特性
-                </h3>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">主要功能特性</h3>
                 <ul className="space-y-3">
                   {features &&
                     features.map((feature, index) => (
@@ -289,65 +266,42 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
                           viewBox="0 0 24 24"
                           stroke="currentColor"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {feature}
-                        </span>
+                        <span className="text-gray-700 dark:text-gray-300">{feature}</span>
                       </li>
                     ))}
                 </ul>
               </div>
             )}
 
-            {activeTab === "pricing" && (
+            {activeTab === 'pricing' && (
               <div>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                  价格计划
-                </h3>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">价格计划</h3>
 
                 {pricing ? (
                   <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <p className="mb-2">
-                          <span className="font-medium text-gray-900 dark:text-white">
-                            免费版：
-                          </span>
-                          <span className="text-gray-700 dark:text-gray-300">
-                            {pricing.free_tier ? "有" : "无"}
-                          </span>
+                          <span className="font-medium text-gray-900 dark:text-white">免费版：</span>
+                          <span className="text-gray-700 dark:text-gray-300">{pricing.free_tier ? '有' : '无'}</span>
                         </p>
                         <p className="mb-2">
-                          <span className="font-medium text-gray-900 dark:text-white">
-                            试用期：
-                          </span>
-                          <span className="text-gray-700 dark:text-gray-300">
-                            {pricing.has_trial ? "有" : "无"}
-                          </span>
+                          <span className="font-medium text-gray-900 dark:text-white">试用期：</span>
+                          <span className="text-gray-700 dark:text-gray-300">{pricing.has_trial ? '有' : '无'}</span>
                         </p>
                         {pricing.starting_price && (
                           <p>
-                            <span className="font-medium text-gray-900 dark:text-white">
-                              起始价格：
-                            </span>
-                            <span className="text-gray-700 dark:text-gray-300">
-                              {pricing.starting_price}
-                            </span>
+                            <span className="font-medium text-gray-900 dark:text-white">起始价格：</span>
+                            <span className="text-gray-700 dark:text-gray-300">{pricing.starting_price}</span>
                           </p>
                         )}
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <p className="text-gray-500 dark:text-gray-400">
-                    暂无价格信息
-                  </p>
+                  <p className="text-gray-500 dark:text-gray-400">暂无价格信息</p>
                 )}
               </div>
             )}
@@ -360,10 +314,8 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
                 onClick={handleFavoriteClick}
                 className="flex items-center px-4 py-2 text-sm font-medium rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none"
               >
-                <span className="w-5 h-5 mr-2">
-                  {isFavorite ? <HeartFilledIcon /> : <HeartIcon />}
-                </span>
-                {isFavorite ? "已收藏" : "收藏"}
+                <span className="w-5 h-5 mr-2">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
+                {isFavorite ? '已收藏' : '收藏'}
               </button>
             </div>
             <div>
@@ -380,7 +332,7 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ChatAIDetail;
+export default ChatAIDetail

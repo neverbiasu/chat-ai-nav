@@ -3,6 +3,7 @@
 ## 技术栈
 
 ### 前端
+
 - **Next.js**: React框架，支持SSR和静态生成
 - **TypeScript**: 类型安全的JavaScript超集
 - **TailwindCSS**: 原子化CSS框架
@@ -11,6 +12,7 @@
 - **@heroicons/react**: SVG图标库
 
 ### 后端
+
 - **Express**: Node.js Web应用框架
 - **MongoDB**: 文档型数据库
 - **Mongoose**: MongoDB对象模型工具
@@ -44,18 +46,22 @@
 ## 开发规范
 
 ### 代码风格
+
 - 使用ESLint和Prettier进行代码格式化
 - 遵循TypeScript严格模式
 - 组件采用函数式编程，使用React Hooks
 
 ### 命名规范
+
 - 文件名：PascalCase用于组件，camelCase用于工具函数
 - 组件名：使用PascalCase
 - 变量和函数：使用camelCase
 - 常量：使用UPPER_SNAKE_CASE
 
 ### Git提交规范
+
 提交信息格式：
+
 ```
 <type>(<scope>): <subject>
 
@@ -63,6 +69,7 @@
 ```
 
 类型(type)：
+
 - feat: 新功能
 - fix: 修复bug
 - docs: 文档更新
@@ -72,6 +79,7 @@
 - chore: 构建过程或辅助工具的变动
 
 ### API规范
+
 - RESTful API设计
 - 使用JWT进行身份验证
 - 统一的错误处理和响应格式
@@ -81,41 +89,43 @@
 ```typescript
 // Tool模型
 interface Tool {
-  id: string;
-  name: string;
-  description: string;
+  id: string
+  name: string
+  description: string
   category: {
-    level1: string;
-    level2?: string;
-    tags: string[];
-  };
-  icon: string;
-  url: string;
-  rating: number;
-  updateTime: Date;
+    level1: string
+    level2?: string
+    tags: string[]
+  }
+  icon: string
+  url: string
+  rating: number
+  updateTime: Date
 }
 
 // User模型
 interface User {
-  id: string;
-  email: string;
-  username: string;
-  prefLanguage: string;
-  collections: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  id: string
+  email: string
+  username: string
+  prefLanguage: string
+  collections: string[]
+  createdAt: Date
+  updatedAt: Date
 }
 ```
 
 ## 性能优化
 
 ### 前端优化
+
 - 图片懒加载和优化
 - 组件代码分割
 - 静态页面生成(SSG)
 - 缓存策略
 
 ### 后端优化
+
 - 数据库索引优化
 - API响应缓存
 - 并发请求处理
@@ -123,6 +133,7 @@ interface User {
 ## 部署流程
 
 1. 构建步骤
+
 ```bash
 # 安装依赖
 npm install
@@ -135,6 +146,7 @@ npm start
 ```
 
 2. 环境变量配置
+
 ```env
 MONGODB_URI=your_mongodb_connection_string
 NEXT_PUBLIC_API_URL=your_api_url

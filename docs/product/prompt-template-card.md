@@ -25,35 +25,38 @@
 
 ### 信息结构
 
-| 属性 | 说明 | 是否必需 | 数据类型 |
-| --- | --- | --- | --- |
-| id | 提示词模板唯一标识符 | 是 | String |
-| name | 提示词模板名称 | 是 | String |
-| logo_path | 相关图标路径 | 是 | String |
-| content | 提示词内容 | 是 | String |
-| desc | 简短描述 | 是 | String |
-| tags | 标签数组 | 是 | Array<String> |
-| placeholder_pos | 可替换占位符位置 | 否 | Array<Object> |
-| isPublic | 是否公开 | 是 | Boolean |
-| isFavorite | 是否已收藏 | 否 | Boolean |
-| creator | 创作者信息 | 否 | Object |
-| usage_count | 使用次数 | 否 | Number |
-| rating | 评分 | 否 | Number |
-| compatible_models | 兼容模型列表 | 否 | Array<String> |
+| 属性              | 说明                 | 是否必需 | 数据类型      |
+| ----------------- | -------------------- | -------- | ------------- |
+| id                | 提示词模板唯一标识符 | 是       | String        |
+| name              | 提示词模板名称       | 是       | String        |
+| logo_path         | 相关图标路径         | 是       | String        |
+| content           | 提示词内容           | 是       | String        |
+| desc              | 简短描述             | 是       | String        |
+| tags              | 标签数组             | 是       | Array<String> |
+| placeholder_pos   | 可替换占位符位置     | 否       | Array<Object> |
+| isPublic          | 是否公开             | 是       | Boolean       |
+| isFavorite        | 是否已收藏           | 否       | Boolean       |
+| creator           | 创作者信息           | 否       | Object        |
+| usage_count       | 使用次数             | 否       | Number        |
+| rating            | 评分                 | 否       | Number        |
+| compatible_models | 兼容模型列表         | 否       | Array<String> |
 
 ### 视觉规范
 
 - **尺寸**：
+
   - 桌面端：280px × 200px
   - 平板端：240px × 180px
   - 移动端：宽度100%，高度自适应
 
 - **布局结构**：
+
   - 顶部：图标 + 名称 + 收藏按钮
   - 中部：简短描述 + 内容预览（最多3行，超出显示省略号）
   - 底部：标签展示 + 复制按钮 + 应用按钮
 
 - **颜色规范**：
+
   - 卡片背景：#FFFFFF
   - 边框：1px solid #E8E8E8
   - 阴影：0 2px 8px rgba(0,0,0,0.1)
@@ -74,10 +77,12 @@
 ### 交互规范
 
 - **悬停效果**：
+
   - 卡片轻微上浮（transform: translateY(-2px)）
   - 阴影加深（0 4px 12px rgba(0,0,0,0.15)）
 
 - **点击行为**：
+
   - 点击卡片主体：展开详情弹窗，显示完整提示词内容
   - 点击收藏按钮：切换收藏状态，触发本地存储
   - 点击复制按钮：复制提示词内容到剪贴板
@@ -102,10 +107,10 @@
   logo="/assets/icons/writing.png"
   desc="帮助用户突破写作瓶颈，生成创意灵感"
   content="我需要你扮演创意写作顾问。请根据我提供的主题「{{主题}}」，生成一个创意故事开头，包含引人入胜的场景描述和人物介绍。"
-  tags={["写作", "创意", "故事"]}
-  placeholder_pos={[{name: "主题", start: 23, end: 29}]}
+  tags={['写作', '创意', '故事']}
+  placeholder_pos={[{ name: '主题', start: 23, end: 29 }]}
   isPublic={true}
-  creator={{name: "创意工坊", avatar: "/assets/avatars/workshop.png"}}
+  creator={{ name: '创意工坊', avatar: '/assets/avatars/workshop.png' }}
 />
 ```
 

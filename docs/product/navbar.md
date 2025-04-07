@@ -24,23 +24,23 @@
 
 ### 2.1 组件信息结构
 
-| 字段名 | 类型 | 说明 |
-| --- | --- | --- |
-| navItems | array | 导航项列表 |
-| activeKey | string | 当前激活的导航项 |
-| theme | string | 当前主题（light/dark） |
-| isMobile | boolean | 是否为移动端视图 |
-| isCollapsed | boolean | 移动端菜单是否折叠 |
+| 字段名      | 类型    | 说明                   |
+| ----------- | ------- | ---------------------- |
+| navItems    | array   | 导航项列表             |
+| activeKey   | string  | 当前激活的导航项       |
+| theme       | string  | 当前主题（light/dark） |
+| isMobile    | boolean | 是否为移动端视图       |
+| isCollapsed | boolean | 移动端菜单是否折叠     |
 
 ### 2.2 导航项结构
 
-| 字段名 | 类型 | 说明 |
-| --- | --- | --- |
-| key | string | 导航项唯一标识 |
-| label | string | 导航项显示文本 |
-| icon | string | 导航项图标 |
-| path | string | 导航项链接地址 |
-| children | array | 子导航项列表 |
+| 字段名   | 类型   | 说明           |
+| -------- | ------ | -------------- |
+| key      | string | 导航项唯一标识 |
+| label    | string | 导航项显示文本 |
+| icon     | string | 导航项图标     |
+| path     | string | 导航项链接地址 |
+| children | array  | 子导航项列表   |
 
 ## 3. 交互规范
 

@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
-import { ElementType } from 'react'
 
 // 导入 NavItem 接口而不是重新定义
 import { NavItem } from './navConfig'

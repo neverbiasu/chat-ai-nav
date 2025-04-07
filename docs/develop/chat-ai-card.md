@@ -27,17 +27,17 @@ ChatAICard 是展示 AI 工具基本信息的卡片组件，支持多种展示�
 
 ```tsx
 export interface ChatAICardProps {
-  id: string            // AI工具唯一标识符
-  name: string          // AI工具名称
-  logo_path: string     // Logo图片路径
-  desc: string          // 简短描述
-  tags: string[]        // 标签数组
-  url: string           // 跳转链接
-  company?: string      // 公司名称（可选）
-  hotness?: number      // 热度值（可选）
-  isFavorite?: boolean  // 是否已收藏（可选）
-  variant?: 'standard' | 'simple' | 'detailed'  // 卡片变体
-  onFavoriteToggle?: (id: string, isFavorite: boolean) => void  // 收藏状态变更回调
+  id: string // AI工具唯一标识符
+  name: string // AI工具名称
+  logo_path: string // Logo图片路径
+  desc: string // 简短描述
+  tags: string[] // 标签数组
+  url: string // 跳转链接
+  company?: string // 公司名称（可选）
+  hotness?: number // 热度值（可选）
+  isFavorite?: boolean // 是否已收藏（可选）
+  variant?: 'standard' | 'simple' | 'detailed' // 卡片变体
+  onFavoriteToggle?: (id: string, isFavorite: boolean) => void // 收藏状态变更回调
 }
 ```
 
@@ -83,20 +83,22 @@ const handleImageError = () => {
 }
 
 // 在渲染中使用
-{!imageError ? (
-  <Image
-    src={logo_path}
-    alt={`${name} logo`}
-    width={50}
-    height={50}
-    className="w-full h-full object-contain"
-    onError={handleImageError}
-  />
-) : (
-  <div className="w-full h-full flex items-center justify-center font-bold text-xl text-blue-500 bg-blue-50 dark:bg-blue-900 dark:text-blue-300">
-    {name.charAt(0)}
-  </div>
-)}
+{
+  !imageError ? (
+    <Image
+      src={logo_path}
+      alt={`${name} logo`}
+      width={50}
+      height={50}
+      className="w-full h-full object-contain"
+      onError={handleImageError}
+    />
+  ) : (
+    <div className="w-full h-full flex items-center justify-center font-bold text-xl text-blue-500 bg-blue-50 dark:bg-blue-900 dark:text-blue-300">
+      {name.charAt(0)}
+    </div>
+  )
+}
 ```
 
 当图片加载失败时，组件会显示一个带有首字母的占位符，确保 UI 的完整性。
@@ -122,7 +124,7 @@ const renderCardContent = () => {
 ```tsx
 // 根据变体决定卡片高度类名
 const getCardHeightClasses = () => {
-  switch(variant) {
+  switch (variant) {
     case 'simple':
       return 'h-[120px] sm:h-[120px]'
     case 'detailed':
@@ -143,7 +145,7 @@ const getCardHeightClasses = () => {
 import ChatAICard from '@/components/chat-ai-card/ChatAICard'
 
 // 基础用法
-<ChatAICard 
+<ChatAICard
   id="chatgpt"
   name="ChatGPT"
   logo_path="/images/chatgpt-logo.png"
@@ -153,7 +155,7 @@ import ChatAICard from '@/components/chat-ai-card/ChatAICard'
 />
 
 // 详情卡片变体
-<ChatAICard 
+<ChatAICard
   id="gemini"
   name="Gemini"
   logo_path="/images/gemini-logo.png"
@@ -184,9 +186,7 @@ import ChatAICard from '@/components/chat-ai-card/ChatAICard'
 卡片组件通过 Tailwind 的深色模式类名实现了深色主题适配：
 
 ```tsx
-<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-  {/* 卡片内容 */}
-</div>
+<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">{/* 卡片内容 */}</div>
 ```
 
 通过使用 `dark:` 前缀，组件能够在深色模式下自动切换到适合的颜色，与整个应用的主题系统保持一致。
@@ -196,9 +196,7 @@ import ChatAICard from '@/components/chat-ai-card/ChatAICard'
 组件使用 Tailwind 的响应式前缀（如 `sm:`、`md:`、`lg:`）确保在各种设备上的最佳展示效果。比如：
 
 ```tsx
-<div className="min-h-[160px] sm:min-h-[140px] md:min-h-[160px]">
-  {/* 卡片内容 */}
-</div>
+<div className="min-h-[160px] sm:min-h-[140px] md:min-h-[160px]">{/* 卡片内容 */}</div>
 ```
 
 这使得卡片能够根据屏幕尺寸自动调整其高度和布局。

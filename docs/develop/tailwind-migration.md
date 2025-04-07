@@ -45,17 +45,14 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          500: '#1890ff', // 主色调
+          500: '#1890ff' // 主色调
           // ...其他色阶
         }
-      },
+      }
       // 添加了动画效果
     }
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography')
-  ]
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')]
 }
 ```
 
@@ -80,12 +77,12 @@ module.exports = {
 根据状态添加不同样式：
 
 ```jsx
-<button className={`
+<button
+  className={`
   px-4 py-2 rounded-md 
-  ${isActive 
-    ? "bg-blue-500 text-white" 
-    : "bg-gray-200 text-gray-700"}
-`}>
+  ${isActive ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}
+`}
+>
   点击我
 </button>
 ```
@@ -95,34 +92,38 @@ module.exports = {
 不同屏幕尺寸下应用不同样式：
 
 ```jsx
-<div className="
+<div
+  className="
   w-full        <!-- 手机端占满宽度 -->
   md:w-1/2      <!-- 平板占一半宽度 -->
   lg:w-1/3      <!-- 桌面占三分之一宽度 -->
-">
+"
+>
   卡片内容
 </div>
 ```
 
 📱 **响应式断点**:
 
-| 前缀 | 最小宽度 | 典型设备 |
-|------|---------|---------|
-| (无) | 0px     | 手机（竖屏）|
-| `sm:` | 640px   | 手机（横屏）|
-| `md:` | 768px   | 平板 |
-| `lg:` | 1024px  | 小桌面 |
-| `xl:` | 1280px  | 大桌面 |
+| 前缀  | 最小宽度 | 典型设备     |
+| ----- | -------- | ------------ |
+| (无)  | 0px      | 手机（竖屏） |
+| `sm:` | 640px    | 手机（横屏） |
+| `md:` | 768px    | 平板         |
+| `lg:` | 1024px   | 小桌面       |
+| `xl:` | 1280px   | 大桌面       |
 
 ### 深色模式
 
 轻松添加深色模式支持：
 
 ```jsx
-<div className="
+<div
+  className="
   bg-white text-black       <!-- 亮色模式 -->
   dark:bg-gray-800 dark:text-white  <!-- 深色模式 -->
-">
+"
+>
   自动适应亮色/深色模式
 </div>
 ```
@@ -145,7 +146,7 @@ module.exports = {
 
    ```jsx
    import clsx from 'clsx';
-   
+
    <div className={clsx(
      'px-4 py-2 rounded',
      isActive && 'bg-blue-500 text-white',
@@ -161,11 +162,7 @@ module.exports = {
    ```jsx
    // 而不是重复使用一堆类名
    function Card({ children }) {
-     return (
-       <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
-         {children}
-       </div>
-     );
+     return <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">{children}</div>
    }
    ```
 
@@ -173,15 +170,15 @@ module.exports = {
 
 下面是两种方案的简单对比：
 
-| 特性 | CSS Modules | Tailwind CSS |
-|------|-------------|--------------|
-| 样式位置 | 单独的 CSS 文件 | 直接在 HTML/JSX 中 |
-| 学习难度 | 低（普通 CSS） | 中（需要学习类名） |
-| 开发速度 | 较慢（需要切换文件） | 快（直接在模板中修改） |
-| 样式隔离 | 自动 | 需要手动组织 |
-| 文件大小 | 较大 | 优化后更小 |
-| 代码可读性 | 较好 | 长类名可能降低可读性 |
-| 团队协作 | 需要命名约定 | 标准化类名系统 |
+| 特性       | CSS Modules          | Tailwind CSS           |
+| ---------- | -------------------- | ---------------------- |
+| 样式位置   | 单独的 CSS 文件      | 直接在 HTML/JSX 中     |
+| 学习难度   | 低（普通 CSS）       | 中（需要学习类名）     |
+| 开发速度   | 较慢（需要切换文件） | 快（直接在模板中修改） |
+| 样式隔离   | 自动                 | 需要手动组织           |
+| 文件大小   | 较大                 | 优化后更小             |
+| 代码可读性 | 较好                 | 长类名可能降低可读性   |
+| 团队协作   | 需要命名约定         | 标准化类名系统         |
 
 ## 进一步学习
 

@@ -26,15 +26,15 @@
 
 ```tsx
 interface NavbarProps {
-  navItems: NavItem[]  // 导航项配置
-  className?: string   // 自定义样式类
+  navItems: NavItem[] // 导航项配置
+  className?: string // 自定义样式类
 }
 
 interface NavItem {
-  key: string          // 唯一标识符
-  label: string        // 显示文本
-  icon?: ElementType   // 图标组件
-  path: string         // 链接路径
+  key: string // 唯一标识符
+  label: string // 显示文本
+  icon?: ElementType // 图标组件
+  path: string // 链接路径
   children?: NavItem[] // 子导航项
 }
 ```
@@ -68,8 +68,8 @@ useEffect(() => {
 
 ```tsx
 useEffect(() => {
-  if (!mounted) return;
-  
+  if (!mounted) return
+
   const handleResize = () => {
     setIsMobile(window.innerWidth < 768)
   }
@@ -93,8 +93,8 @@ useEffect(() => {
 
 ```tsx
 useEffect(() => {
-  if (!mounted || !pathname) return;
-  
+  if (!mounted || !pathname) return
+
   const activeItem =
     navItems.find((item) => item.path === pathname) ||
     navItems.find((item) => item.children?.some((child) => child.path === pathname))
@@ -123,7 +123,7 @@ import Navbar from '@/components/navbar/Navbar'
 import navConfig from '@/components/navbar/navConfig'
 
 // 在应用布局中使用
-<Navbar navItems={navConfig} />
+;<Navbar navItems={navConfig} />
 ```
 
 组件接受 `navItems` 数组作为主要输入，该数组定义了导航栏的结构和内容。

@@ -1,82 +1,79 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect } from "react";
-import {
-  PromptCard,
-  PromptCardList,
-  PromptDetailModal,
-  PromptTemplate,
-} from "@/components/prompt-template-card";
-import { mockPromptTemplates } from "@/data/mockPromptTemplates";
+import React, { useState, useEffect } from 'react'
+import { PromptCardList, PromptDetailModal, PromptTemplate } from '@/components/prompt-template-card'
+import { mockPromptTemplates } from '@/data/mockPromptTemplates'
 
 const PromptCardDemo = () => {
-  const [variant, setVariant] = useState<
-    "standard" | "simple" | "detail" | "workshop"
-  >("standard");
-  const [templates, setTemplates] = useState<PromptTemplate[]>([]);
-  const [mounted, setMounted] = useState(false);
-  const [detailVisible, setDetailVisible] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] =
-    useState<PromptTemplate | null>(null);
+  const [variant, setVariant] = useState<'standard' | 'simple' | 'detail' | 'workshop'>('standard')
+  const [templates, setTemplates] = useState<PromptTemplate[]>([])
+  const [mounted, setMounted] = useState(false)
+  const [detailVisible, setDetailVisible] = useState(false)
+  const [selectedTemplate, setSelectedTemplate] = useState<PromptTemplate | null>(null)
 
   useEffect(() => {
-    setMounted(true);
-    setTemplates(mockPromptTemplates);
-  }, []);
+    setMounted(true)
+    setTemplates(mockPromptTemplates)
+  }, [])
+
+  useEffect(() => {
+    // 使用允许的 console.warn 或 console.error 或完全移除
+    // console.log(currentPrompt);
+    console.warn(currentPrompt) // 或者完全移除这个console语句
+  }, [currentPrompt])
 
   const handleFavoriteToggle = (id: string, isFavorite: boolean) => {
-    setTemplates((prev) =>
-      prev.map((template) =>
-        template.id === id ? { ...template, isFavorite } : template
-      )
-    );
+    setTemplates((prev) => prev.map((template) => (template.id === id ? { ...template, isFavorite } : template)))
 
     // 同步详情弹窗中的收藏状态
     if (selectedTemplate && selectedTemplate.id === id) {
-      setSelectedTemplate({ ...selectedTemplate, isFavorite });
+      setSelectedTemplate({ ...selectedTemplate, isFavorite })
     }
-  };
+  }
 
   const handleCardClick = (id: string) => {
-    const template = templates.find((t) => t.id === id);
+    const template = templates.find((t) => t.id === id)
     if (template) {
-      setSelectedTemplate(template);
-      setDetailVisible(true);
+      setSelectedTemplate(template)
+      setDetailVisible(true)
     }
-  };
+  }
 
   const handleCloseDetail = () => {
-    setDetailVisible(false);
-  };
+    setDetailVisible(false)
+  }
 
   const handleCopy = (content: string) => {
     navigator.clipboard
       .writeText(content)
       .then(() => {
-        console.log("内容已复制到剪贴板");
+        console.log('内容已复制到剪贴板')
       })
       .catch((err) => {
-        console.error("复制失败: ", err);
-      });
-  };
+        console.error('复制失败: ', err)
+      })
+  }
 
   const handleApply = (template: PromptTemplate) => {
-    console.log("应用提示词模板:", template);
+    console.log('应用提示词模板:', template)
     // 实际应用中，这里会将提示词应用到对话或编辑器
-  };
+  }
+
+  const submitMessage = () => {
+    // console.log("submitting message", message);
+    // 可以移除这行或者使用允许的警告/错误
+    if (message) {
+      // 处理消息提交逻辑
+    }
+  }
 
   if (!mounted) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8">
-          提示词卡片组件演示
-        </h1>
+        <h1 className="text-3xl font-bold text-center mb-8">提示词卡片组件演示</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div
-              key={i}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 min-h-[200px] animate-pulse"
-            >
+            <div key={i} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 min-h-[200px] animate-pulse">
               <div className="flex items-center mb-3">
                 <div className="w-10 h-10 rounded-lg bg-gray-200 dark:bg-gray-700 mr-3"></div>
                 <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
@@ -95,14 +92,12 @@ const PromptCardDemo = () => {
           ))}
         </div>
       </div>
-    );
+    )
   }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">
-        提示词卡片组件演示
-      </h1>
+      <h1 className="text-3xl font-bold text-center mb-8">提示词卡片组件演示</h1>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-xl font-semibold mb-4">卡片变体</h2>
@@ -112,8 +107,8 @@ const PromptCardDemo = () => {
               type="radio"
               name="variant"
               value="standard"
-              checked={variant === "standard"}
-              onChange={() => setVariant("standard")}
+              checked={variant === 'standard'}
+              onChange={() => setVariant('standard')}
               className="mr-2 accent-blue-500"
             />
             标准卡片
@@ -123,8 +118,8 @@ const PromptCardDemo = () => {
               type="radio"
               name="variant"
               value="simple"
-              checked={variant === "simple"}
-              onChange={() => setVariant("simple")}
+              checked={variant === 'simple'}
+              onChange={() => setVariant('simple')}
               className="mr-2"
             />
             简洁卡片
@@ -134,8 +129,8 @@ const PromptCardDemo = () => {
               type="radio"
               name="variant"
               value="detail"
-              checked={variant === "detail"}
-              onChange={() => setVariant("detail")}
+              checked={variant === 'detail'}
+              onChange={() => setVariant('detail')}
               className="mr-2"
             />
             详情卡片
@@ -145,8 +140,8 @@ const PromptCardDemo = () => {
               type="radio"
               name="variant"
               value="workshop"
-              checked={variant === "workshop"}
-              onChange={() => setVariant("workshop")}
+              checked={variant === 'workshop'}
+              onChange={() => setVariant('workshop')}
               className="mr-2"
             />
             工坊卡片
@@ -169,8 +164,7 @@ const PromptCardDemo = () => {
       <section className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-xl font-semibold mb-4">响应式布局</h2>
         <p className="text-gray-600 dark:text-gray-300">
-          尝试调整浏览器窗口大小，查看卡片如何根据屏幕宽度自动调整布局。
-          在移动设备上，卡片将以列表形式显示。
+          尝试调整浏览器窗口大小，查看卡片如何根据屏幕宽度自动调整布局。 在移动设备上，卡片将以列表形式显示。
         </p>
       </section>
 
@@ -196,7 +190,7 @@ const PromptCardDemo = () => {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default PromptCardDemo;
+export default PromptCardDemo

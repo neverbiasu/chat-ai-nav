@@ -1,103 +1,103 @@
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { HeartIcon, HeartFilledIcon } from "@/components/chat-ai-card/Icons";
-import { ChatAIModel } from "@/data/mockChatAIModels";
+import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
+import { HeartIcon, HeartFilledIcon } from '@/components/chat-ai-card/Icons'
+import { ChatAIModel } from '@/data/mockChatAIModels'
 
 // 使用新的数据模型接口
 export interface ChatAICardProps extends Partial<ChatAIModel> {
-  variant?: "standard" | "simple" | "detailed";
-  onFavoriteToggle?: (id: string, isFavorite: boolean) => void;
-  onClick?: () => void;
+  variant?: 'standard' | 'simple' | 'detailed'
+  onFavoriteToggle?: (id: string, isFavorite: boolean) => void
+  onClick?: () => void
 }
 
 const ChatAICard: React.FC<ChatAICardProps> = ({
-  id = "",
-  name = "",
-  logo_path = "",
-  desc = "",
+  id = '',
+  name = '',
+  logo_path = '',
+  desc = '',
   tags = [],
-  ai_url = "", // 使用新的ai_url字段
+  ai_url = '', // 使用新的ai_url字段
   company,
   hotness,
   isFavorite: initialFavorite = false,
-  variant = "standard",
+  variant = 'standard',
   onFavoriteToggle,
-  onClick,
+  onClick
 }) => {
-  const [isFavorite, setIsFavorite] = useState(initialFavorite);
-  const [imageError, setImageError] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(initialFavorite)
+  const [imageError, setImageError] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   // 添加挂载检查
   useEffect(() => {
-    setMounted(true);
+    setMounted(true)
 
     // 在组件挂载后从 localStorage 获取收藏状态
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       try {
-        const favorites = JSON.parse(localStorage.getItem("favorites") || "{}");
-        setIsFavorite(!!favorites[id]);
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '{}')
+        setIsFavorite(!!favorites[id])
       } catch (error) {
-        console.error("Failed to parse favorites from localStorage", error);
+        console.error('Failed to parse favorites from localStorage', error)
       }
     }
-  }, [id]);
+  }, [id])
 
   // 更新收藏状态
   useEffect(() => {
-    setIsFavorite(initialFavorite);
-  }, [initialFavorite]);
+    setIsFavorite(initialFavorite)
+  }, [initialFavorite])
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState);
+    e.stopPropagation()
+    const newFavoriteState = !isFavorite
+    setIsFavorite(newFavoriteState)
 
     if (onFavoriteToggle) {
-      onFavoriteToggle(id, newFavoriteState);
+      onFavoriteToggle(id, newFavoriteState)
     }
 
     // 确保仅在客户端访问 localStorage
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       try {
-        const favorites = JSON.parse(localStorage.getItem("favorites") || "{}");
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '{}')
         if (newFavoriteState) {
-          favorites[id] = true;
+          favorites[id] = true
         } else {
-          delete favorites[id];
+          delete favorites[id]
         }
-        localStorage.setItem("favorites", JSON.stringify(favorites));
+        localStorage.setItem('favorites', JSON.stringify(favorites))
       } catch (error) {
-        console.error("Failed to update favorites in localStorage", error);
+        console.error('Failed to update favorites in localStorage', error)
       }
     }
-  };
+  }
 
   const handleCardClick = () => {
     if (onClick) {
-      onClick();
+      onClick()
     }
-  };
+  }
 
   const handleImageError = () => {
-    setImageError(true);
-  };
+    setImageError(true)
+  }
 
   // 根据变体决定卡片高度类名
   const getCardHeightClasses = () => {
     switch (variant) {
-      case "simple":
-        return "h-[120px] sm:h-[120px]";
-      case "detailed":
-        return "min-h-[200px] sm:min-h-[180px]";
+      case 'simple':
+        return 'h-[120px] sm:h-[120px]'
+      case 'detailed':
+        return 'min-h-[200px] sm:min-h-[180px]'
       default:
-        return "min-h-[160px] sm:min-h-[140px]";
+        return 'min-h-[160px] sm:min-h-[140px]'
     }
-  };
+  }
 
   // 根据变体决定要渲染的内容
   const renderCardContent = () => {
-    if (variant === "simple") {
+    if (variant === 'simple') {
       return (
         <>
           <div className="flex items-center mb-3">
@@ -123,13 +123,9 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
             <button
               className="bg-transparent border-none cursor-pointer text-gray-400 hover:text-red-500 p-1 ml-auto flex items-center justify-center"
               onClick={handleFavoriteClick}
-              aria-label={
-                isFavorite ? "Remove from favorites" : "Add to favorites"
-              }
+              aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
             >
-              <span className="w-5 h-5">
-                {isFavorite ? <HeartFilledIcon /> : <HeartIcon />}
-              </span>
+              <span className="w-5 h-5">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
             </button>
           </div>
           <a
@@ -142,7 +138,7 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
             访问
           </a>
         </>
-      );
+      )
     }
 
     return (
@@ -168,48 +164,33 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
             <h3 className="m-0 text-base font-semibold text-gray-800 dark:text-white whitespace-nowrap overflow-hidden text-ellipsis">
               {name}
             </h3>
-            {company && (
-              <p className="m-0 text-xs text-gray-500 dark:text-gray-400">
-                {company.name}
-              </p>
-            )}
+            {company && <p className="m-0 text-xs text-gray-500 dark:text-gray-400">{company.name}</p>}
           </div>
           <button
             className="bg-transparent border-none cursor-pointer text-gray-400 hover:text-red-500 p-1 ml-auto flex items-center justify-center"
             onClick={handleFavoriteClick}
-            aria-label={
-              isFavorite ? "Remove from favorites" : "Add to favorites"
-            }
+            aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           >
-            <span className="w-5 h-5">
-              {isFavorite ? <HeartFilledIcon /> : <HeartIcon />}
-            </span>
+            <span className="w-5 h-5">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
           </button>
         </div>
 
         <div className="flex-1 mb-3">
-          <p className="m-0 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
-            {desc}
-          </p>
+          <p className="m-0 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{desc}</p>
         </div>
 
-        {variant === "detailed" && hotness !== undefined && (
+        {variant === 'detailed' && hotness !== undefined && (
           <div className="mb-2">
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              热度: {hotness}
-            </span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">热度: {hotness}</span>
             <div className="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-sm overflow-hidden mt-1">
-              <div
-                className="h-full bg-blue-500 rounded-sm"
-                style={{ width: `${hotness}%` }}
-              />
+              <div className="h-full bg-blue-500 rounded-sm" style={{ width: `${hotness}%` }} />
             </div>
           </div>
         )}
 
         <div className="flex items-center justify-between">
           <div className="flex flex-wrap gap-1">
-            {tags.slice(0, variant === "detailed" ? 5 : 3).map((tag) => (
+            {tags.slice(0, variant === 'detailed' ? 5 : 3).map((tag) => (
               <span
                 key={tag}
                 className="px-2 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs rounded"
@@ -229,8 +210,8 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
           </a>
         </div>
       </>
-    );
-  };
+    )
+  }
 
   // 如果尚未挂载，可以返回一个加载占位符
   if (!mounted) {
@@ -256,7 +237,7 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -266,7 +247,7 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
     >
       {renderCardContent()}
     </div>
-  );
-};
+  )
+}
 
-export default ChatAICard;
+export default ChatAICard

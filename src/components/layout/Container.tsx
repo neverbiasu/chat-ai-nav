@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from 'react'
 
 interface ContainerProps {
-  children: ReactNode;
-  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'none';
-  padding?: string;
-  margin?: string;
-  background?: string;
-  className?: string;
+  children: ReactNode
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'none'
+  padding?: string
+  margin?: string
+  background?: string
+  className?: string
 }
 
 /**
@@ -19,7 +19,7 @@ const Container: React.FC<ContainerProps> = ({
   padding = 'px-6',
   margin = 'mx-auto',
   background = 'bg-white dark:bg-gray-900',
-  className = '',
+  className = ''
 }) => {
   // 根据设计文档定义的最大宽度值
   const maxWidthClasses = {
@@ -29,8 +29,8 @@ const Container: React.FC<ContainerProps> = ({
     lg: 'max-w-[1200px]', // 大尺寸容器，根据设计文档定义
     xl: 'max-w-7xl', // 超大尺寸容器
     full: 'max-w-full', // 全宽容器
-    none: '', // 无最大宽度限制
-  };
+    none: '' // 无最大宽度限制
+  }
 
   return (
     <div
@@ -38,7 +38,7 @@ const Container: React.FC<ContainerProps> = ({
     >
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default Container;
+export default Container

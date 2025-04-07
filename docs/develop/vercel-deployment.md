@@ -16,6 +16,7 @@
 > **如何获取 Vercel Token、Organization ID 和 Project ID：**
 >
 > **获取 Vercel Token：**
+>
 > 1. 登录 [Vercel 控制台](https://vercel.com/dashboard)
 > 2. 点击右上角头像，选择 "Settings"
 > 3. 在左侧菜单中选择 "Tokens"
@@ -24,7 +25,9 @@
 > 6. 点击 "Create" 并复制生成的 Token 值
 >
 > **获取 Organization ID 和 Project ID：**
+>
 > 1. 使用 Vercel CLI 连接项目：
+>
 >    ```bash
 >    # 安装 Vercel CLI（如果尚未安装）
 >    npm i -g vercel
@@ -42,10 +45,11 @@
 >    # 在项目目录中关联现有项目或创建新项目
 >    vercel link
 >    ```
+>
 > 2. 关联后，Vercel CLI 将在项目目录中创建 `.vercel/project.json` 文件
 > 3. 这个文件包含 `orgId`（Organization ID）和 `projectId`（Project ID）
 >    ```json
->    {"orgId":"your_org_id","projectId":"your_project_id"}
+>    { "orgId": "your_org_id", "projectId": "your_project_id" }
 >    ```
 
 2. 在 GitHub 仓库中设置以下 Secrets：
@@ -68,9 +72,9 @@ name: Vercel部署
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [opened, synchronize, reopened]
 
 jobs:
   deploy:
@@ -116,12 +120,8 @@ jobs:
   "github": {
     "enabled": false
   },
-  "builds": [
-    { "src": ".next", "use": "@vercel/static" }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/$1" }
-  ]
+  "builds": [{ "src": ".next", "use": "@vercel/static" }],
+  "rewrites": [{ "source": "/(.*)", "destination": "/$1" }]
 }
 ```
 
