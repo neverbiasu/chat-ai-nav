@@ -2,21 +2,10 @@
  * 导航栏配置文件
  * 定义导航项结构和导航数据
  */
-
-import { ElementType } from 'react'
-import {
-  HomeIcon,
-  MagnifyingGlassIcon,
-  BookmarkIcon,
-  QuestionMarkCircleIcon,
-  BookOpenIcon,
-  Cog6ToothIcon
-} from '@heroicons/react/24/outline'
-
 export interface NavItem {
   key: string
   label: string
-  icon?: ElementType
+  icon?: string // 修改类型为string，用于存储iconify图标名称
   path: string
   children?: NavItem[]
 }
@@ -25,13 +14,13 @@ const navConfig: NavItem[] = [
   {
     key: 'home',
     label: '首页',
-    icon: HomeIcon,
+    icon: 'mdi:home-outline',
     path: '/'
   },
   {
     key: 'discover',
     label: '发现',
-    icon: MagnifyingGlassIcon,
+    icon: 'mdi:magnify',
     path: '/discover',
     children: [
       {
@@ -49,25 +38,25 @@ const navConfig: NavItem[] = [
   {
     key: 'favorites',
     label: '收藏',
-    icon: BookmarkIcon,
+    icon: 'mdi:bookmark-outline',
     path: '/favorites'
   },
   {
     key: 'prompt',
     label: '提示词工坊',
-    icon: BookOpenIcon,
+    icon: 'mdi:book-open-outline',
     path: '/prompt'
   },
   {
     key: 'about',
     label: '关于',
-    icon: QuestionMarkCircleIcon,
+    icon: 'mdi:help-circle-outline',
     path: '/about'
   },
   {
     key: 'settings',
     label: '设置',
-    icon: Cog6ToothIcon,
+    icon: 'mdi:cog-outline',
     path: '/settings'
   }
 ]

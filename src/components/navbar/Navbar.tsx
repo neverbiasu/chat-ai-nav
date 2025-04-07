@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
-import { Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
+import { Icon } from '@iconify/react' // 导入Iconify组件
 
 // 导入 NavItem 接口而不是重新定义
 import { NavItem } from './navConfig'
@@ -88,7 +88,11 @@ const Navbar: React.FC<NavbarProps> = ({ navItems, className = '' }) => {
             if (isMobile) setIsCollapsed(true)
           }}
         >
-          {item.icon && <span className="mr-2 w-5 h-5">{React.createElement(item.icon)}</span>}
+          {item.icon && (
+            <span className="mr-2 w-5 h-5">
+              <Icon icon={item.icon} width={20} height={20} />
+            </span>
+          )}
           <span>{item.label}</span>
         </Link>
 
@@ -141,7 +145,11 @@ const Navbar: React.FC<NavbarProps> = ({ navItems, className = '' }) => {
               className="p-2 rounded-md text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline-none"
               aria-label={theme === 'dark' ? '切换到亮色模式' : '切换到暗色模式'}
             >
-              {theme === 'dark' ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
+              {theme === 'dark' ? (
+                <Icon icon="mdi:weather-sunny" width={20} height={20} />
+              ) : (
+                <Icon icon="mdi:weather-night" width={20} height={20} />
+              )}
             </button>
 
             {/* 移动端菜单按钮 */}
@@ -151,7 +159,11 @@ const Navbar: React.FC<NavbarProps> = ({ navItems, className = '' }) => {
                 className="p-2 rounded-md text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline-none"
                 aria-label={isCollapsed ? '打开菜单' : '关闭菜单'}
               >
-                {isCollapsed ? <Bars3Icon className="h-6 w-6" /> : <XMarkIcon className="h-6 w-6" />}
+                {isCollapsed ? (
+                  <Icon icon="mdi:menu" width={24} height={24} />
+                ) : (
+                  <Icon icon="mdi:close" width={24} height={24} />
+                )}
               </button>
             )}
           </div>
@@ -170,7 +182,7 @@ const Navbar: React.FC<NavbarProps> = ({ navItems, className = '' }) => {
                 className="p-2 rounded-md text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline-none"
                 aria-label="关闭菜单"
               >
-                <XMarkIcon className="h-6 w-6" />
+                <Icon icon="mdi:close" width={24} height={24} />
               </button>
             </div>
             <nav className="p-4">
