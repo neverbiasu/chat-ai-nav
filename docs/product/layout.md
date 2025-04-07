@@ -24,22 +24,22 @@
 
 ### 2.1 容器组件结构
 
-| 字段名 | 类型 | 说明 |
-| --- | --- | --- |
-| maxWidth | string | 容器最大宽度 |
-| padding | string | 内边距 |
-| margin | string | 外边距 |
-| background | string | 背景样式 |
+| 字段名     | 类型   | 说明         |
+| ---------- | ------ | ------------ |
+| maxWidth   | string | 容器最大宽度 |
+| padding    | string | 内边距       |
+| margin     | string | 外边距       |
+| background | string | 背景样式     |
 
 ### 2.2 网格系统结构
 
-| 字段名 | 类型 | 说明 |
-| --- | --- | --- |
-| span | number | 栅格占据列数 |
-| offset | number | 栅格左侧偏移列数 |
-| gutter | array | 栅格间隔 |
-| justify | string | 水平排列方式 |
-| align | string | 垂直对齐方式 |
+| 字段名  | 类型   | 说明             |
+| ------- | ------ | ---------------- |
+| span    | number | 栅格占据列数     |
+| offset  | number | 栅格左侧偏移列数 |
+| gutter  | array  | 栅格间隔         |
+| justify | string | 水平排列方式     |
+| align   | string | 垂直对齐方式     |
 
 ## 3. 布局规范
 

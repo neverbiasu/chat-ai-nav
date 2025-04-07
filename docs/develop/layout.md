@@ -23,7 +23,7 @@ MainLayout 组件是应用的主要布局结构，包含顶部导航栏、中间
 
 ```tsx
 interface MainLayoutProps {
-  children: React.ReactNode  // 页面主要内容
+  children: React.ReactNode // 页面主要内容
 }
 ```
 

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { HeartIcon, HeartFilledIcon, CopyIcon, CheckIcon } from "./Icons";
-import Image from "next/image";
-import { PromptTemplate } from "./PromptCard";
-import { Icon } from "@iconify/react";
+import React, { useState } from 'react'
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import { HeartIcon, HeartFilledIcon, CopyIcon, CheckIcon } from './Icons'
+import Image from 'next/image'
+import { PromptTemplate } from './PromptCard'
+import { Icon } from '@iconify/react'
 
 interface PromptDetailModalProps {
-  visible: boolean;
-  template: PromptTemplate | null;
-  onClose: () => void;
-  onFavorite?: (id: string, isFavorite: boolean) => void;
-  onCopy?: (content: string) => void;
-  onApply?: (template: PromptTemplate) => void;
-  onEdit?: (template: PromptTemplate) => void;
+  visible: boolean
+  template: PromptTemplate | null
+  onClose: () => void
+  onFavorite?: (id: string, isFavorite: boolean) => void
+  onCopy?: (content: string) => void
+  onApply?: (template: PromptTemplate) => void
+  onEdit?: (template: PromptTemplate) => void
 }
 
 const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
@@ -22,68 +22,58 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
   onFavorite,
   onCopy,
   onApply,
-  onEdit,
+  onEdit
 }) => {
-  const [copied, setCopied] = useState(false);
-  const [imageError, setImageError] = useState(false);
+  const [copied, setCopied] = useState(false)
+  const [imageError, setImageError] = useState(false)
 
-  if (!visible || !template) return null;
+  if (!visible || !template) return null
 
-  const {
-    id,
-    name,
-    logo_path,
-    content,
-    desc,
-    tags,
-    isFavorite = false,
-    creator,
-    compatible_models,
-  } = template;
+  const { id, name, content, desc, tags, isFavorite = false, creator, compatible_models } = template
 
   const handleCopy = () => {
     if (onCopy) {
-      onCopy(content);
+      onCopy(content)
     } else {
       navigator.clipboard
         .writeText(content)
         .then(() => {
-          setCopied(true);
-          setTimeout(() => setCopied(false), 2000);
+          setCopied(true)
+          setTimeout(() => setCopied(false), 2000)
         })
         .catch((err) => {
-          console.error("Failed to copy: ", err);
-        });
+          console.error('Failed to copy: ', err)
+        })
     }
-  };
+  }
 
   const handleFavorite = () => {
     if (onFavorite) {
-      onFavorite(id, !isFavorite);
+      onFavorite(id, !isFavorite)
     }
-  };
+  }
 
   const handleApply = () => {
     if (onApply) {
-      onApply(template);
+      onApply(template)
     }
-  };
+  }
 
   const handleEdit = () => {
     if (onEdit) {
-      onEdit(template);
+      onEdit(template)
     }
-  };
+  }
 
   const handleImageError = () => {
-    setImageError(true);
-  };
+    setImageError(true)
+  }
 
   const renderLogo = () => {
     if (template.icon) {
       return (
         <div
-          className={`w-full h-full flex items-center justify-center ${template.icon_color ? "" : "text-blue-500 dark:text-blue-300"}`}
+          className={`w-full h-full flex items-center justify-center ${template.icon_color ? '' : 'text-blue-500 dark:text-blue-300'}`}
         >
           <Icon
             icon={template.icon}
@@ -91,7 +81,7 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
             style={template.icon_color ? { color: template.icon_color } : {}}
           />
         </div>
-      );
+      )
     } else if (template.logo_path && !imageError) {
       return (
         <Image
@@ -102,15 +92,15 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
           className="w-full h-full object-contain"
           onError={handleImageError}
         />
-      );
+      )
     } else {
       return (
         <div className="w-full h-full flex items-center justify-center font-bold text-xl text-blue-500 bg-blue-50 dark:bg-blue-900 dark:text-blue-300">
           {name.charAt(0)}
         </div>
-      );
+      )
     }
-  };
+  }
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -125,14 +115,8 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
               {renderLogo()}
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {name}
-              </h2>
-              {creator && (
-                <p className="text-sm text-blue-600 dark:text-blue-400">
-                  {creator.name}
-                </p>
-              )}
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{name}</h2>
+              {creator && <p className="text-sm text-blue-600 dark:text-blue-400">{creator.name}</p>}
             </div>
           </div>
           <button
@@ -159,9 +143,7 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
           </div>
 
           <div className="mb-6">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              提示词内容
-            </h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">提示词内容</h3>
             <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg font-mono text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap">
               {content}
             </div>
@@ -169,9 +151,7 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
 
           {compatible_models && compatible_models.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                兼容模型
-              </h3>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">兼容模型</h3>
               <div className="flex flex-wrap gap-2">
                 {compatible_models.map((model) => (
                   <span
@@ -193,19 +173,15 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
               onClick={handleFavorite}
               className="flex items-center px-4 py-2 text-sm font-medium rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none mr-2"
             >
-              <span className="w-5 h-5 mr-2">
-                {isFavorite ? <HeartFilledIcon /> : <HeartIcon />}
-              </span>
-              {isFavorite ? "已收藏" : "收藏"}
+              <span className="w-5 h-5 mr-2">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
+              {isFavorite ? '已收藏' : '收藏'}
             </button>
             <button
               onClick={handleCopy}
               className="flex items-center px-4 py-2 text-sm font-medium rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none"
             >
-              <span className="w-5 h-5 mr-2">
-                {copied ? <CheckIcon /> : <CopyIcon />}
-              </span>
-              {copied ? "已复制" : "复制"}
+              <span className="w-5 h-5 mr-2">{copied ? <CheckIcon /> : <CopyIcon />}</span>
+              {copied ? '已复制' : '复制'}
             </button>
           </div>
           <div className="flex space-x-2">
@@ -229,7 +205,7 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PromptDetailModal;
+export default PromptDetailModal
