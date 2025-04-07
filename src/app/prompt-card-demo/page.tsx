@@ -16,12 +16,6 @@ const PromptCardDemo = () => {
     setTemplates(mockPromptTemplates)
   }, [])
 
-  useEffect(() => {
-    // 使用允许的 console.warn 或 console.error 或完全移除
-    // console.log(currentPrompt);
-    console.warn(currentPrompt) // 或者完全移除这个console语句
-  }, [currentPrompt])
-
   const handleFavoriteToggle = (id: string, isFavorite: boolean) => {
     setTemplates((prev) => prev.map((template) => (template.id === id ? { ...template, isFavorite } : template)))
 
@@ -57,14 +51,6 @@ const PromptCardDemo = () => {
   const handleApply = (template: PromptTemplate) => {
     console.log('应用提示词模板:', template)
     // 实际应用中，这里会将提示词应用到对话或编辑器
-  }
-
-  const submitMessage = () => {
-    // console.log("submitting message", message);
-    // 可以移除这行或者使用允许的警告/错误
-    if (message) {
-      // 处理消息提交逻辑
-    }
   }
 
   if (!mounted) {
