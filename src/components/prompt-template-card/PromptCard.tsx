@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { HeartIcon, HeartFilledIcon, CopyIcon, CheckIcon } from './Icons'
-import { Icon } from '@iconify/react'
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { Icon } from "@iconify/react";
 
 // 基础类型定义
 export interface PlaceholderPosition {
@@ -207,7 +206,12 @@ const PromptCard: React.FC<PromptCardProps> = ({
             onClick={handleFavoriteClick}
             aria-label={isFavorite ? '移除收藏' : '添加收藏'}
           >
-            <span className="w-5 h-5">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
+            <span className="w-5 h-5">
+              <Icon
+                icon={isFavorite ? "mdi:heart" : "mdi:heart-outline"}
+                className="w-full h-full"
+              />
+            </span>
           </button>
         </div>
 
@@ -237,8 +241,13 @@ const PromptCard: React.FC<PromptCardProps> = ({
               onClick={handleCopy}
               className="inline-flex items-center px-2 py-1 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm rounded transition-colors"
             >
-              <span className="w-4 h-4 mr-1">{copied ? <CheckIcon /> : <CopyIcon />}</span>
-              {copied ? '已复制' : '复制'}
+              <span className="w-4 h-4 mr-1">
+                <Icon
+                  icon={copied ? "mdi:check" : "mdi:content-copy"}
+                  className="w-full h-full"
+                />
+              </span>
+              {copied ? "已复制" : "复制"}
             </button>
             {(variant === 'detail' || variant === 'workshop') && (
               <button

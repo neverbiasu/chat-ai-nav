@@ -9,7 +9,6 @@
 - **TailwindCSS**: 原子化CSS框架
 - **next-themes**: 主题切换支持
 - **next-i18next**: 国际化支持
-- **@heroicons/react**: SVG图标库
 
 ### 后端
 

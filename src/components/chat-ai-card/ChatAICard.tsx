@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { HeartIcon, HeartFilledIcon } from '@/components/chat-ai-card/Icons'
-import { ChatAIModel } from '@/data/mockChatAIModels'
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { Icon } from "@iconify/react";
+import { ChatAIModel } from "@/data/mockChatAIModels";
 
 // 使用新的数据模型接口
 export interface ChatAICardProps extends Partial<ChatAIModel> {
@@ -125,7 +125,12 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
               onClick={handleFavoriteClick}
               aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
             >
-              <span className="w-5 h-5">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
+              <span className="w-5 h-5">
+                <Icon
+                  icon={isFavorite ? "mdi:heart" : "mdi:heart-outline"}
+                  className="w-full h-full"
+                />
+              </span>
             </button>
           </div>
           <a
@@ -171,7 +176,12 @@ const ChatAICard: React.FC<ChatAICardProps> = ({
             onClick={handleFavoriteClick}
             aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           >
-            <span className="w-5 h-5">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
+            <span className="w-5 h-5">
+              <Icon
+                icon={isFavorite ? "mdi:heart" : "mdi:heart-outline"}
+                className="w-full h-full"
+              />
+            </span>
           </button>
         </div>
 
