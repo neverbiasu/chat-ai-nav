@@ -19,7 +19,7 @@
 - React 18+
 - Next.js 14+
 - next-themes (主题管理)
-- Heroicons (图标库)
+- iconify (图标库)
 - Tailwind CSS (样式框架)
 
 ### 组件结构
@@ -68,6 +68,8 @@ useEffect(() => {
 
 ```tsx
 useEffect(() => {
+  if (!mounted) return;
+
   if (!mounted) return
 
   const handleResize = () => {
@@ -93,6 +95,8 @@ useEffect(() => {
 
 ```tsx
 useEffect(() => {
+  if (!mounted || !pathname) return;
+
   if (!mounted || !pathname) return
 
   const activeItem =

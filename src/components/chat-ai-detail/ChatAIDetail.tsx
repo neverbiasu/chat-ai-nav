@@ -1,11 +1,9 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { HeartIcon, HeartFilledIcon } from '@/components/chat-ai-card/Icons'
-import { StarIcon } from '@/components/chat-ai-detail/Icons'
-import { ChatAIModelDetail } from '@/data/mockChatAIModelDetails'
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { ChatAIModelDetail } from "@/data/mockChatAIModelDetails";
+import { Icon } from "@iconify/react";
 
 // 使用新的数据模型接口
 export interface ChatAIDetailProps extends Partial<ChatAIModelDetail> {
@@ -132,14 +130,19 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
                 className="p-2 rounded-md text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 focus:outline-none"
                 aria-label={isFavorite ? '取消收藏' : '收藏'}
               >
-                <span className="w-6 h-6 block">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
+                <span className="w-6 h-6 block">
+                  <Icon
+                    icon={isFavorite ? "mdi:heart" : "mdi:heart-outline"}
+                    className="w-full h-full"
+                  />
+                </span>
               </button>
               <button
                 onClick={onClose}
                 className="p-2 rounded-md text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline-none ml-2"
                 aria-label="关闭"
               >
-                <XMarkIcon className="h-6 w-6" />
+                <Icon icon="mdi:close" className="h-6 w-6" />
               </button>
             </div>
           </div>
@@ -204,8 +207,9 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
                       <div className="text-3xl font-bold text-gray-900 dark:text-white">{rating.score.toFixed(1)}</div>
                       <div className="flex items-center justify-center mb-1">
                         {[...Array(5)].map((_, i) => (
-                          <StarIcon
+                          <Icon
                             key={i}
+                            icon="mdi:star"
                             className={`h-4 w-4 ${
                               i < Math.round(rating.score) ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'
                             }`}
@@ -260,15 +264,13 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
                   {features &&
                     features.map((feature, index) => (
                       <li key={index} className="flex items-start">
-                        <svg
+                        <Icon
+                          icon="mdi:check"
                           className="h-5 w-5 text-blue-500 mt-0.5 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+                        />
+                        <span className="text-gray-700 dark:text-gray-300">
+                          {feature}
+                        </span>
                       </li>
                     ))}
                 </ul>
@@ -314,8 +316,13 @@ const ChatAIDetail: React.FC<ChatAIDetailProps> = ({
                 onClick={handleFavoriteClick}
                 className="flex items-center px-4 py-2 text-sm font-medium rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none"
               >
-                <span className="w-5 h-5 mr-2">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
-                {isFavorite ? '已收藏' : '收藏'}
+                <span className="w-5 h-5 mr-2">
+                  <Icon
+                    icon={isFavorite ? "mdi:heart" : "mdi:heart-outline"}
+                    className="w-full h-full"
+                  />
+                </span>
+                {isFavorite ? "已收藏" : "收藏"}
               </button>
             </div>
             <div>

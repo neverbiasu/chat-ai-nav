@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { HeartIcon, HeartFilledIcon, CopyIcon, CheckIcon } from './Icons'
-import Image from 'next/image'
-import { PromptTemplate } from './PromptCard'
-import { Icon } from '@iconify/react'
+import React, { useState } from "react";
+import Image from "next/image";
+import { PromptTemplate } from "./PromptCard";
+import { Icon } from "@iconify/react";
 
 interface PromptDetailModalProps {
   visible: boolean
@@ -123,7 +121,7 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
             onClick={onClose}
             className="p-2 rounded-md text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline-none"
           >
-            <XMarkIcon className="h-6 w-6" />
+            <Icon icon="mdi:close" className="h-6 w-6" />
           </button>
         </div>
 
@@ -173,15 +171,25 @@ const PromptDetailModal: React.FC<PromptDetailModalProps> = ({
               onClick={handleFavorite}
               className="flex items-center px-4 py-2 text-sm font-medium rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none mr-2"
             >
-              <span className="w-5 h-5 mr-2">{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}</span>
-              {isFavorite ? '已收藏' : '收藏'}
+              <span className="w-5 h-5 mr-2">
+                <Icon
+                  icon={isFavorite ? "mdi:heart" : "mdi:heart-outline"}
+                  className="w-full h-full"
+                />
+              </span>
+              {isFavorite ? "已收藏" : "收藏"}
             </button>
             <button
               onClick={handleCopy}
               className="flex items-center px-4 py-2 text-sm font-medium rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none"
             >
-              <span className="w-5 h-5 mr-2">{copied ? <CheckIcon /> : <CopyIcon />}</span>
-              {copied ? '已复制' : '复制'}
+              <span className="w-5 h-5 mr-2">
+                <Icon
+                  icon={copied ? "mdi:check" : "mdi:content-copy"}
+                  className="w-full h-full"
+                />
+              </span>
+              {copied ? "已复制" : "复制"}
             </button>
           </div>
           <div className="flex space-x-2">
